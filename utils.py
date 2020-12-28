@@ -5,7 +5,7 @@ import os
 import math
 import torch
 import copy
-homeDirectory = '/home/nvidia/catkin_new/src/robot_prediction/'
+homeDirectory = '/home/user/test_dir/robot_prediciton/'
 testPaths  = []
 trainPaths = []
 paths = []
