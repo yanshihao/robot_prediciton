@@ -5,7 +5,7 @@ import os
 import math
 import torch
 import copy
-homeDirectory = '/home/user/test_dir/robot_prediciton/'
+homeDirectory = os.getcwd()
 testPaths  = []
 trainPaths = []
 paths = []
