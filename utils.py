@@ -5,7 +5,7 @@ import os
 import math
 import torch
 import copy
-homeDirectory = os.getcwd() + ‘/’
+homeDirectory = os.getcwd() + '/'
 testPaths  = []
 trainPaths = []
 paths = []
