@@ -114,6 +114,15 @@ def init_weights(m):
         
 model.apply(init_weights)
 optimizer = optim.Adam(model.parameters())
+
+class My_loss(nn.Module):
+    def __init__(self):
+        super(My_loss, self).__init__()
+        
+    def forward(self, input, target):
+        ret = ((input - target) ** 2) * torch.tensor([1,1.2,1.4,1.6,1.8,2.0,2.2,2.4]) / 13.6
+        return torch.mean(ret)
+
 criterion = nn.MSELoss()
 
 def train(model, iterator, optimizer, criterion, clip):
