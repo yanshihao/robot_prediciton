@@ -10,7 +10,7 @@ import copy
 import time
 
 model.load_state_dict(torch.load(homeDirectory+'my-model-test.pt'))
-n = input("input the line number")
+n = int(input("input the line number"))
 locationData = np.load(homeDirectory+'dataset/'+ testPaths[n])
 # 读取一条文件并画图显示轨迹
 '''
