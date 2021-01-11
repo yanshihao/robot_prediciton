@@ -56,7 +56,7 @@ class CollectData:
                 self.__controlState = 0
                 # 将数据存成文件并且清空数据
                 nowTime = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
-                fileName = nowTime + ' Circle3' + '.npy'
+                fileName = nowTime + ' Turning3' + '.npy'
                 result = plotData(self.__data)
                 if result is True:
                     np.save(fileName, self.__data)
