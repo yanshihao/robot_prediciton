@@ -162,7 +162,7 @@ def epoch_time(start_time, end_time):
     elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
     return elapsed_mins, elapsed_secs
 
-N_EPOCHS = 40 # 40
+N_EPOCHS = 100 # 40
 CLIP = 1
 
 best_valid_loss = float('inf')
