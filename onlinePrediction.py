@@ -19,13 +19,13 @@ import matplotlib.pyplot as plt
 t0 = np.ones([8,1],dtype = np.float32)
 t1 = np.linspace(0,0.7,8).astype(np.float32).reshape((-1,1))
 t2= t1*t1
-t3= t2*t1
-T = np.concatenate([t0,t1,t2,t3],axis = 1)
+# t3= t2*t1
+T = np.concatenate([t0,t1,t2],axis = 1)
 T_inv = np.linalg.pinv(T)
 
 class Prediction:
     def __init__(self):
-        rospy.init_node("Prediction", anonymous=True)
+        rospy.init_node("onlinePrediction", anonymous=True)
         self.__controlSignal = False
         self.__controlState = 0
         self.__isAngleValid = False
@@ -91,7 +91,7 @@ class Prediction:
                         point.y = npFuture[i][1]
                         point.z = 0
                         futureTrajectory.locations.append(point)
-                    for i in range(0, 4):
+                    for i in range(0, 3):
                         for j in range(0,2):
                             futureTrajectory.weights.append(Float64(Weights[i][j]/1000)) 
                     now = time.time()
