@@ -21,7 +21,7 @@ class Prediction:
         self.__pubFuture = rospy.Publisher("predicted_trajectory", FutureTrajectory, queue_size=10)
 
     def run(self):
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(13)
         for j in range(len(testPaths)):
             print j, " " , testPaths[j]
         fileIndex = int(input("please input the number: "))
