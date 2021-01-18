@@ -22,6 +22,9 @@ for n in range(len(testPaths)):
         writer.writerow(locationData[i,trgIndex])
     file.close()
 
+    angleFilePath = homeDirectory + 'predictionData/angle' +testPaths[n][:-4] + '.csv'
+    angleFile = codecs.open(angleFilePath, 'w', 'gbk')
+    angleWriter = csv.writer(angleFile)
     predictionFilePath = homeDirectory + 'predictionData/predictions' +testPaths[n][:-4] + '.csv'
     file = codecs.open(predictionFilePath, 'w', 'gbk')
     writer = csv.writer(file)
@@ -53,7 +56,7 @@ for n in range(len(testPaths)):
 
     valid_iterator = DataIter(srclocationDatas,trgLocationDatas,device,1, centerLocs)
     t0 = np.ones([8,1],dtype = np.float32)
-    t1 = np.linspace(0,0.7,8).astype(np.float32).reshape((-1,1))
+    t1 = np.linspace(0,1.003,8).astype(np.float32).reshape((-1,1))
     t2= t1*t1
     t3= t2*t1
     T = np.concatenate([t0,t1,t2,t3],axis = 1)
@@ -73,13 +76,15 @@ for n in range(len(testPaths)):
             src_reals[:, i, 0:2] = src_reals[:,i,0:2]*sig[np.newaxis,:]+ mu[np.newaxis,:]+ cents[i][np.newaxis,:]
             src_reals[:, i, 2:4] = src_reals[:,i,2:4]*sig[np.newaxis,:]+ mu[np.newaxis,:] + cents[i][np.newaxis,:]
             src_reals[:, i, 4  ] = src_reals[:,i,4  ]*sig[np.newaxis,0]+ mu[np.newaxis,0] + cents[i][np.newaxis,0]
-            src_reals[:, i, 5  ] = src_reals[:, i, 4  ] * 540
+            src_reals[:, i, 5  ] = src_reals[:, i, 5  ] * 540
             trg_reals[:, i, :] = trg_reals[:,i,:]*sig[np.newaxis,:]+ mu[np.newaxis,:] + cents[i][np.newaxis,:]
             out_reals[:, i, :] = out_reals[:,i,:]*sig[np.newaxis,:]+ mu[np.newaxis,:] + cents[i][np.newaxis,:]
+            angleWriter.writerow( src_reals[9:10, i, 5  ] )
             writer.writerow(out_reals[:,i,0])
             writer.writerow(out_reals[:,i,1])
             writer.writerow(trg_reals[:,i,0])
             writer.writerow(trg_reals[:,i,1])
     file.close()
+    angleFile.close()
 #为了防止程序直接退出，接受一个字符后才结束
 raw_input()

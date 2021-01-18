@@ -8,7 +8,7 @@ import codecs
 from utils import homeDirectory,testPaths
 
 t0 = np.ones([8,1],dtype = np.float32)
-t1 = np.linspace(0,0.7,8).astype(np.float32).reshape((-1,1))
+t1 = np.linspace(0,1,8).astype(np.float32).reshape((-1,1))
 t2= t1*t1
 # t3= t2*t1
 T = np.concatenate([t0,t1,t2],axis = 1)
@@ -21,7 +21,7 @@ class Prediction:
         self.__pubFuture = rospy.Publisher("predicted_trajectory", FutureTrajectory, queue_size=10)
 
     def run(self):
-        rate = rospy.Rate(13)
+        rate = rospy.Rate(7)
         for j in range(len(testPaths)):
             print j, " " , testPaths[j]
         fileIndex = int(input("please input the number: "))
@@ -29,14 +29,19 @@ class Prediction:
         predictionFile = open(predictionFilePath,'r')
         predictionReader = csv.reader(predictionFile)
         predictionData = list(predictionReader)
-        predictNum = len(predictionData)/2
+        predictNum = len(predictionData)/4
+        
+        angleFilePath = homeDirectory + 'predictionData/angle' +testPaths[fileIndex][:-4] + '.csv'
+        angleFile = open(angleFilePath,'r')
+        angleReader = csv.reader(angleFile)
+        angleData = list(angleReader)
         index = 0 
         while not rospy.is_shutdown():
             out_reals = np.zeros([8,2])
             if index == predictNum:
                 break
-            out_reals[:,0] = predictionData[2*index]
-            out_reals[:,1] = predictionData[2*index+1]
+            out_reals[:,0] = predictionData[4*index]
+            out_reals[:,1] = predictionData[4*index+1]
             Weights = np.matmul(T_inv,out_reals)
             futureTrajectory = FutureTrajectory()
             for i in range(0, 8):
@@ -48,6 +53,8 @@ class Prediction:
             for i in range(0, 3):
                 for j in range(0,2):
                     futureTrajectory.weights.append(Float64(Weights[i,j]/1000)) 
+            
+            futureTrajectory.weights.append(Float64( float(angleData[index][0]) - float(angleData[0][0]) ))
             self.__pubFuture.publish(futureTrajectory)    
             index = index + 1
             rate.sleep()

@@ -50,13 +50,13 @@ class CollectData:
                 curData = self.__extract.extractHumanPose(humanDepthList, self.__odm)
                 curData.extend([self.__angleData.x, self.__angleData.y, self.__angleData.z,
                                 self.__imuData.linear_acceleration.x, self.__imuData.linear_acceleration.y, self.__imuData.linear_acceleration.z,
-                                self.__imuData.angular_velocity.x, self.__imuData.angular_velocity.y, self.__imuData.angular_velocity.z])
+                                self.__imuData.angular_velocity.x, self.__imuData.angular_velocity.y, self.__imuData.angular_velocity.z, time.time()])
                 self.__data.append(curData)
             else:
                 self.__controlState = 0
                 # 将数据存成文件并且清空数据
                 nowTime = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
-                fileName = nowTime + ' Turning4' + '.npy'
+                fileName = nowTime + ' Turning5' + '.npy'
                 result = plotData(self.__data)
                 if result is True:
                     np.save(fileName, self.__data)

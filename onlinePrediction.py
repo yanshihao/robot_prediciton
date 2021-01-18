@@ -35,12 +35,12 @@ class Prediction:
         self.__isPredictionValid = False
         self.__model = Model()
         self.__collectData = []
-        self.__pubFuture = rospy.Publisher("predicted_trajectory", FutureTrajectory, queue_size=10)
-        self.__pubLocation = rospy.Publisher("nowLocation", Point , queue_size=10)
-        rospy.Subscriber("robot_odm", Pose2D, self.odmCallback, queue_size=10)
-        rospy.Subscriber("openpose_ros/human_depth_list", HumanDepthList, self.humanListCallback,queue_size=10)
+        self.__pubFuture = rospy.Publisher("predicted_trajectory", FutureTrajectory, queue_size=4)
+        self.__pubLocation = rospy.Publisher("nowLocation", Point , queue_size=4)
+        rospy.Subscriber("robot_odm", Pose2D, self.odmCallback, queue_size=4)
+        rospy.Subscriber("openpose_ros/human_depth_list", HumanDepthList, self.humanListCallback,queue_size=50)
         rospy.Subscriber("/robot/controlSignal", Bool, self.controlSignalCallback)
-        rospy.Subscriber("/imu", Imu, self.imuCallback, queue_size=10)
+        rospy.Subscriber("/imu", Imu, self.imuCallback, queue_size=3)
         rospy.Subscriber("/imu_angle", Vector3, self.angleCallback)
 
     def odmCallback(self, odm):
@@ -97,6 +97,7 @@ class Prediction:
                     now = time.time()
                     print( now - cur )
                     self.__pubFuture.publish(futureTrajectory)
+                    
             else:
                 self.__controlState = 0
                 # 将数据存成文件并且清空数据
