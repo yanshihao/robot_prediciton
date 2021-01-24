@@ -1,90 +1,35 @@
-2021-01-11-17_31_05 Turning3.npy
-2021-01-13-17_26_14 Turning4.npy
-2021-01-10-16_39_30 Turning1.npy
-2020-12-28-17_18_54 Circle2.npy
-2021-01-13-17_22_46 Turning4.npy
-2020-12-28-19_31_28 Circle2.npy
-2021-01-10-16_13_33 Turning1.npy
-2021-01-10-17_10_27 Turning1.npy
-2021-01-10-17_15_42 Turning1.npy
-2021-01-11-17_17_13 Turning3.npy
-2021-01-10-16_45_23 Turning1.npy
-2021-01-11-19_08_27 Turning3.npy
-2020-12-28-19_54_16 Circle3.npy
-2021-01-18-15_38_59 Turning5.npy
-2021-01-18-10_22_05 Turning5.npy
-2021-01-11-17_23_19 Turning3.npy
-2021-01-18-15_33_53 Turning5.npy
-2021-01-13-17_14_01 Turning4.npy
-2021-01-10-16_42_32 Turning1.npy
-2020-12-28-16_52_03 Cricle1.npy
-2020-12-28-17_24_01 Circle2.npy
-2021-01-18-15_32_15 Turning5.npy
-2021-01-18-10_13_04 Turning5.npy
-2021-01-11-19_18_39 Turning3.npy
-2021-01-13-17_37_36 Turning4.npy
-2021-01-13-17_34_57 Turning4.npy
-2020-12-28-19_36_12 Circle2.npy
-2021-01-11-17_15_23 Turning3.npy
-2020-12-28-17_25_50 Circle2.npy
-2021-01-11-17_13_49 Turning3.npy
-2021-01-11-17_24_46 Turning3.npy
-2020-12-28-17_17_06 Circle2.npy
-2021-01-10-16_15_09 Turning1.npy
-2021-01-18-10_08_03 Turning5.npy
-2021-01-18-10_25_52 Turning5.npy
-2021-01-18-10_00_24 Turning5.npy
-2021-01-10-16_26_22 Turning1.npy
-2021-01-13-17_33_29 Turning4.npy
-2020-12-28-19_43_26 Circle3.npy
-2021-01-10-16_08_44 Turning1.npy
-2020-12-28-19_46_57 Circle3.npy
-2020-12-28-19_38_13 Circle2.npy
-2021-01-11-19_11_12 Turning3.npy
-2021-01-11-19_12_34 Turning3.npy
-2021-01-13-17_42_15 Turning4.npy
-2021-01-18-15_58_24 Turning5.npy
-2020-12-28-19_41_39 Circle3.npy
-2021-01-18-15_35_22 Turning5.npy
-2021-01-10-16_05_30 Turning1.npy
-2021-01-13-17_39_19 Turning4.npy
-2021-01-18-15_53_35 Turning5.npy
-2021-01-13-17_43_39 Turning4.npy
-2020-12-28-17_03_27 Circle1.npy
-2021-01-18-10_24_03 Turning5.npy
-2021-01-13-17_29_00 Turning4.npy
-2021-01-18-15_37_20 Turning5.npy
-2021-01-11-19_09_49 Turning3.npy
-2020-12-28-19_57_50 Circle3.npy
-2021-01-11-17_11_54 Turning3.npy
-2021-01-18-10_16_33 Turning5.npy
-2020-12-28-17_01_46 Circle1.npy
-2021-01-18-10_09_26 Turning5.npy
-2021-01-13-17_21_20 Turning4.npy
-2020-12-28-16_47_36 Circle1.npy
-2020-12-28-16_49_52 Circle1.npy
-2020-12-28-16_59_23 Circle1.npy
-2021-01-11-17_26_51 Turning3.npy
-2021-01-11-17_28_43 Turning3.npy
-2021-01-10-16_24_53 Turning1.npy
-2021-01-18-10_02_40 Turning5.npy
-2021-01-13-17_44_57 Turning4.npy
-2021-01-10-17_13_41 Turning1.npy
-2021-01-10-16_49_40 Turning1.npy
-2021-01-13-17_40_39 Turning4.npy
-2021-01-10-16_10_14 Turning1.npy
-2021-01-13-17_08_19 Turning4.npy
-2020-12-28-17_05_52 Circle1.npy
-2021-01-13-17_27_39 Turning4.npy
-2021-01-13-17_12_36 Turning4.npy
-2020-12-28-19_52_16 Circle3.npy
-2020-12-28-19_45_13 Circle3.npy
-2021-01-11-19_06_58 Turning3.npy
-2020-12-28-16_54_01 Circle1.npy
-2021-01-18-15_52_00 Turning5.npy
-2021-01-11-19_15_14 Turning3.npy
-2021-01-10-16_16_56 Turning1.npy
-2021-01-10-16_41_03 Turning1.npy
-2021-01-18-10_15_01 Turning5.npy
-2021-01-18-15_28_37 Turning5.npy
-2020-12-28-19_48_35 Circle3.npy
+ysh_turn16.npy
+ysh_line12.npy
+ysh_line17.npy
+ysh_line7.npy
+ysh_turn3.npy
+ysh_turn18.npy
+ysh_turn15.npy
+ysh_line24.npy
+ysh_line22.npy
+ysh_line13.npy
+ysh_line16.npy
+ysh_turn21.npy
+ysh_turn5.npy
+ysh_line21.npy
+ysh_turn19.npy
+ysh_turn17.npy
+ysh_turn14.npy
+ysh_turn12.npy
+ysh_line14.npy
+ysh_turn20.npy
+ysh_line8.npy
+ysh_line6.npy
+ysh_turn24.npy
+ysh_line2.npy
+ysh_line1.npy
+ysh_line19.npy
+ysh_line5.npy
+ysh_turn4.npy
+ysh_line10.npy
+ysh_turn13.npy
+ysh_line4.npy
+ysh_line23.npy
+ysh_turn7.npy
+ysh_line18.npy
+ysh_line3.npy
