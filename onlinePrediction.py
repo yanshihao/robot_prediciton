@@ -35,6 +35,9 @@ class Prediction:
         self.__isPredictionValid = False
         self.__model = Model()
         self.__collectData = []
+        self.__isAngleInit = False
+        self.__initAngleData = []
+        self.__angleOffset = 0
         self.__pubFuture = rospy.Publisher("predicted_trajectory", FutureTrajectory, queue_size=4)
         self.__pubLocation = rospy.Publisher("nowLocation", Point , queue_size=4)
         rospy.Subscriber("robot_odm", Pose2D, self.odmCallback, queue_size=4)
@@ -72,6 +75,12 @@ class Prediction:
                 nowLocation.y = curData[1]
                 nowLocation.z = 0
                 self.__pubLocation.publish(nowLocation)
+                if self.__isAngleInit is False:
+                    self.__initAngleData.append(self.__angleData.z)
+                    if len(self.__initAngleData) >= 8:
+                        self.__isAngleInit = True
+                        self.__angleOffset = sum( self.__initAngleData ) / len( self.__initAngleData )
+                        self.__initAngleData = []
                 if len(self.__data) >= 11:
                     self.__isPredictionValid = True
                 if len(self.__data) > 11:
@@ -94,8 +103,10 @@ class Prediction:
                     for i in range(0, 3):
                         for j in range(0,2):
                             futureTrajectory.weights.append(Float64(Weights[i][j]/1000)) 
+                    futureTrajectory.weights.append(Float64(self.__angleData.z - self.__angleOffset))
+                    print( (self.__angleData.z - self.__angleOffset)/180*3.14159 )
                     now = time.time()
-                    print( now - cur )
+                    # print( now - cur )
                     self.__pubFuture.publish(futureTrajectory)
                     
             else:
@@ -108,6 +119,7 @@ class Prediction:
                 self.__data = []
                 self.__extract = Extractor()
                 print "save as " + fileName
+                self.__isAngleInit = False
                 '''
                 for i in range(len(self.__collectData)):
                     if i % 5 == 0:

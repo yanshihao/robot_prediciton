@@ -35,6 +35,10 @@ class Prediction:
         angleFile = open(angleFilePath,'r')
         angleReader = csv.reader(angleFile)
         angleData = list(angleReader)
+        sumAngle = 0
+        for i in range(8):
+            sumAngle = sumAngle + float(angleData[i][0])
+        angleOffset = sumAngle / 8
         index = 0 
         while not rospy.is_shutdown():
             out_reals = np.zeros([8,2])
@@ -54,7 +58,7 @@ class Prediction:
                 for j in range(0,2):
                     futureTrajectory.weights.append(Float64(Weights[i,j]/1000)) 
             
-            futureTrajectory.weights.append(Float64( float(angleData[index][0]) - float(angleData[0][0]) ))
+            futureTrajectory.weights.append(Float64( float(angleData[index][0]) - angleOffset ))
             self.__pubFuture.publish(futureTrajectory)    
             index = index + 1
             rate.sleep()
