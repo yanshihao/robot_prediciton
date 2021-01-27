@@ -142,7 +142,7 @@ class Seq2Seq(nn.Module):
             if t < max_len -1:
                 input = trg[t+1] if teacher_force else output
         return outputs
-INPUT_DIM = 6
+INPUT_DIM = 5
 OUTPUT_DIM = 2
 ENC_EMB_DIM = 24
 DEC_EMB_DIM = 24

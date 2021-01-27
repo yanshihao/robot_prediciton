@@ -69,7 +69,7 @@ def DataIter(srclocationDatas,trgLocationDatas,device,batch, centerLocs):
     f = centerLocs[0].shape[0]
     data = []
     for time in range(times):
-        src = np.empty([10,batch,6],dtype = float)
+        src = np.empty([10,batch,5],dtype = float)
         for i in range(batch): src[:,i,:] = srclocationDatas[batch*time + i][:,0:10].T
         trg = np.empty([8,batch,2],dtype = float)
         for i in range(batch): trg[:,i,:] = trgLocationDatas[batch*time + i][:,0:8].T
