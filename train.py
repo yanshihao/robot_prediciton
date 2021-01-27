@@ -72,7 +72,7 @@ for i, locationData in enumerate(locationDatas):
     centerLoc = copy.deepcopy(locationData[0][0:2,9])
     srclocationDatas[i][0:2, :] = srclocationDatas[i][0:2, :] - centerLoc[:, np.newaxis]
     srclocationDatas[i][2:4, :] = srclocationDatas[i][2:4, :] - centerLoc[:, np.newaxis]
-    srclocationDatas[i][4, :] = srclocationDatas[i][4, :] - centerLoc[0, np.newaxis]
+    # srclocationDatas[i][4, :] = srclocationDatas[i][4, :] - centerLoc[0, np.newaxis]
     trgLocationDatas[i][:, :] = trgLocationDatas[i][:, :] - centerLoc[:, np.newaxis]
     centerLocs.append(centerLoc)
 
@@ -87,8 +87,8 @@ sig = np.std(combineData,1)
 for i, srclocationData in enumerate(srclocationDatas):
     srclocationDatas[i][0:2] = (srclocationDatas[i][0:2] - mu[:, np.newaxis] ) / sig[:, np.newaxis]
     srclocationDatas[i][2:4] = (srclocationDatas[i][2:4] - mu[:, np.newaxis] ) / sig[:, np.newaxis]
-    srclocationDatas[i][4] = (srclocationDatas[i][4] - mu[0, np.newaxis] ) / sig[0, np.newaxis]
-    srclocationDatas[i][5] = srclocationDatas[i][5] / 540
+    # srclocationDatas[i][4] = (srclocationDatas[i][4] - mu[0, np.newaxis] ) / sig[0, np.newaxis]
+    srclocationDatas[i][4] = srclocationDatas[i][4] / 540
     trgLocationDatas[i] = ( trgLocationDatas[i] - mu[:, np.newaxis] ) / sig[:, np.newaxis]
 
 print("the mean of the conbineData is:")

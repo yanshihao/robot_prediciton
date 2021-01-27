@@ -44,15 +44,15 @@ for i, locationData in enumerate(locationDatas):
     centerLoc = copy.deepcopy(locationData[0][0:2,9])
     srclocationDatas[i][0:2, :] = srclocationDatas[i][0:2, :] - centerLoc[:, np.newaxis]
     srclocationDatas[i][2:4, :] = srclocationDatas[i][2:4, :] - centerLoc[:, np.newaxis]
-    srclocationDatas[i][4, :] = srclocationDatas[i][4, :] - centerLoc[0, np.newaxis]
+    # srclocationDatas[i][4, :] = srclocationDatas[i][4, :] - centerLoc[0, np.newaxis]
     trgLocationDatas[i][:, :] = trgLocationDatas[i][:, :] - centerLoc[:, np.newaxis]
     centerLocs.append(centerLoc)
 
 for i, srclocationData in enumerate(srclocationDatas):
     srclocationDatas[i][0:2] = (srclocationDatas[i][0:2] - mu[:, np.newaxis] ) / sig[:, np.newaxis]
     srclocationDatas[i][2:4] = (srclocationDatas[i][2:4] - mu[:, np.newaxis] ) / sig[:, np.newaxis]
-    srclocationDatas[i][4] = (srclocationDatas[i][4] - mu[0, np.newaxis] ) / sig[0, np.newaxis]
-    srclocationDatas[i][5] = srclocationDatas[i][5] / 540
+    # srclocationDatas[i][4] = (srclocationDatas[i][4] - mu[0, np.newaxis] ) / sig[0, np.newaxis]
+    srclocationDatas[i][4] = srclocationDatas[i][4] / 540
     trgLocationDatas[i] = ( trgLocationDatas[i] - mu[:, np.newaxis] ) / sig[:, np.newaxis]
 
 valid_iterator = DataIter(srclocationDatas,trgLocationDatas,device,1, centerLocs)
@@ -77,8 +77,8 @@ for i, batch in enumerate(valid_iterator):
         for i in range(batch_size):
             src_reals[:, i, 0:2] = src_reals[:,i,0:2]*sig[np.newaxis,:]+ mu[np.newaxis,:]+ cents[i][np.newaxis,:]
             src_reals[:, i, 2:4] = src_reals[:,i,2:4]*sig[np.newaxis,:]+ mu[np.newaxis,:] + cents[i][np.newaxis,:]
-            src_reals[:, i, 4  ] = src_reals[:,i,4  ]*sig[np.newaxis,0]+ mu[np.newaxis,0] + cents[i][np.newaxis,0]
-            src_reals[:, i, 5  ] = src_reals[:, i, 4  ] * 540
+            # src_reals[:, i, 4  ] = src_reals[:,i,4  ]*sig[np.newaxis,0]+ mu[np.newaxis,0] + cents[i][np.newaxis,0]
+            src_reals[:, i, 4  ] = src_reals[:, i, 4  ] * 540
             trg_reals[:, i, :] = trg_reals[:,i,:]*sig[np.newaxis,:]+ mu[np.newaxis,:] + cents[i][np.newaxis,:]
             out_reals[:, i, :] = out_reals[:,i,:]*sig[np.newaxis,:]+ mu[np.newaxis,:] + cents[i][np.newaxis,:]
             src_real = src_reals[:,i,:]

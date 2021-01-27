@@ -52,7 +52,7 @@ class dataIter():
         self.trg = trg
         self.cent = cent
 
-srcIndex = [12,13,15,16,18,38] 
+srcIndex = [12,13,15,16,38] 
 trgIndex = [12,13]
 batchSize = 2
 
@@ -110,13 +110,13 @@ def plotLocationData(srcData, trgData):
     fig1.show()
 
 def handleAngleData(data):
-    initAngle = data[5, 0]
+    initAngle = data[4, 0]
     n = data.shape[1]
     for i in range(1, n):
-        if data[5, i] - initAngle >= 180:
-            data[5, i] = data[5, i] - 360
-        elif data[5, i] - initAngle <= -180:
-            data[5, i] = data[5, i] + 360
+        if data[4, i] - initAngle >= 180:
+            data[4, i] = data[4, i] - 360
+        elif data[4, i] - initAngle <= -180:
+            data[4, i] = data[4, i] + 360
     return data
 
 
