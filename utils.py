@@ -86,8 +86,8 @@ from math import pi, cos, sin, sqrt
 def averageFilter( data ):
     n = data.shape[0]
     ret = copy.deepcopy(data)
-    for i in range(10, n - 10):
-        ret[i] = sum(data[i-5:i+5]) / 10
+    #for i in range(10, n - 10):
+    #    ret[i] = sum(data[i-5:i+5]) / 10
     return ret
 
 import matplotlib.pyplot as plt
