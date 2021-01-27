@@ -103,4 +103,6 @@ for numpyFilePath in os.listdir(numpyDirectory):
     fig2.show()
     raw_input()
     '''
+    outputData[:,12:14] = outputData[:,12:14] * 1000
+    outputData[:,15:17] = outputData[:,15:17] * 1000
     np.save(outDirectory + numpyFilePath, outputData )
