@@ -104,9 +104,9 @@ for i, batch in enumerate(valid_iterator):
             ax.legend()
             fig.show()
     print(i)
-    if i > 20:
-        real_trajectory_plot(src, trg, batch.cent)
-        time.sleep(1)
+    
+    real_trajectory_plot(src, trg, batch.cent)
+    time.sleep(1)
     
 #为了防止程序直接退出，接受一个字符后才结束
 raw_input()
