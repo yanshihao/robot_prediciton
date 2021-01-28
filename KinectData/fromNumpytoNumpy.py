@@ -72,11 +72,11 @@ for numpyFilePath in os.listdir(numpyDirectory):
     # ax.plot(numpyData[:, 12], 'g-', label='x')
     # ax.plot(numpyData[:, 13], 'r-', label='y')
     
-    #outputData[:,12] = myFilter(b,a,numpyData[:,12])
-    outputData[:,12] = numpyData[:,12]
+    outputData[:,12] = myFilter(b,a,numpyData[:,12])
+    # outputData[:,12] = numpyData[:,12]
     outputData[:,13] = myFilter(b,a,numpyData[:,13])
-    #outputData[:,15] = myFilter(b,a,numpyData[:,15])
-    outputData[:,15] = numpyData[:,15]
+    outputData[:,15] = myFilter(b,a,numpyData[:,15])
+    # outputData[:,15] = numpyData[:,15]
     outputData[:,16] = myFilter(b,a,numpyData[:,16])
 
     # ax.plot(outputData[:, 12], 'b-', label='aftx')
