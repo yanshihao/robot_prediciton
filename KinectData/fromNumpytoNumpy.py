@@ -68,17 +68,20 @@ for numpyFilePath in os.listdir(numpyDirectory):
         y2robot =-sin(theta) * ( numpyData[i,15] - numpyData[i,46] ) + cos(theta) * ( numpyData[i,16] - numpyData[i,47] ) 
         numpyData[i,15] = x2robot
         numpyData[i,16] = y2robot
-
+    # np.save( homeDirectory + "save.npy", numpyData[:,12] )
     # ax.plot(numpyData[:, 12], 'g-', label='x')
     # ax.plot(numpyData[:, 13], 'r-', label='y')
     
-    outputData[:,12] = myFilter(b,a,numpyData[:,12])
+    #outputData[:,12] = myFilter(b,a,numpyData[:,12])
+    outputData[:,12] = numpyData[:,12]
     outputData[:,13] = myFilter(b,a,numpyData[:,13])
-    outputData[:,15] = myFilter(b,a,numpyData[:,15])
+    #outputData[:,15] = myFilter(b,a,numpyData[:,15])
+    outputData[:,15] = numpyData[:,15]
     outputData[:,16] = myFilter(b,a,numpyData[:,16])
 
     # ax.plot(outputData[:, 12], 'b-', label='aftx')
     # ax.plot(outputData[:, 13], 'b-', label='afty')
+    # ax.legend()
     # fig1.show()
 
     for i in range( np.shape(outputData)[0] ):
@@ -91,6 +94,7 @@ for numpyFilePath in os.listdir(numpyDirectory):
         y2world = sin(theta) * ( outputData[i,15] ) + cos(theta) * ( outputData[i,16] ) +  outputData[i, 47]
         outputData[i,15] = x2world
         outputData[i,16] = y2world
+    
     '''
     fig2 = plt.figure(figsize=[8,6])
     ax = fig2.add_subplot(111)

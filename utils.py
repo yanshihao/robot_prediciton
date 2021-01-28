@@ -156,6 +156,32 @@ def isHumanDataValid(humanDepthList):
         return True
     return False
 
+b = np.array([0.0007, 0.0021, 0.0021, 0.0007])
+a = np.array([1.0000,-2.6236, 2.3147,-0.6855])
+
+class ButterworthFitter:
+    def __init__(self, b, a):
+        self.__b = b
+        self.__a = a
+        self.__num = 0
+        self.__y = []
+        self.__x = []
+        self.__len = len(b)
+
+    def run(self, x):
+        if self.__num < self.__len - 1:
+            self.__num = self.__num + 1
+            self.__x.append(x)
+            self.__y.append(self.__x[0])
+            return self.__x[0]
+        ret = self.__b[0] * self.__x[-1]
+        for i in range(1, self.__len):
+            ret = ret + self.__b[i] * self.__x[self.__len - 1 - i] - self.__a[i] * self.__y[self.__len - 1 - i]
+        del self.__x[0]
+        del self.__y[0]
+        self.__x.append(x)
+        self.__y.append(ret)
+        return ret
 
 class Extractor:
     def __init__(self):
@@ -187,6 +213,11 @@ class Extractor:
         self.__leftHipKalX = Kalman()
         self.__leftHipKalY = Kalman()
         self.__leftHipKalZ = Kalman()
+        self.__rightKneeButterX = ButterworthFitter(b,a)
+        self.__rightKneeButterY = ButterworthFitter(b,a)
+        self.__rightHipButterX = ButterworthFitter(b,a)
+        self.__rightHipButterY = ButterworthFitter(b,a)
+        self.__start = True
 
     def extract(self, humanDepthList, robotLoc):
         if humanDepthList.num_humans == 0:
@@ -194,6 +225,11 @@ class Extractor:
         firstMan = humanDepthList.human_depth_list[0].body_key_points_with_depth
         # 目前只处理了机器人前后移动的任务
         # 处理右髋
+        if self.__start is True:
+            if isHumanDataValid(humanDepthList) is False:
+                return
+            else:
+                self.__start = False
         rightHipLoc = np.array([0.0, 0.0, 0.0])
         rightHipPose = firstMan[rightHip]
         rightHipLocX = rightHipPose.x
@@ -244,7 +280,7 @@ class Extractor:
         # 打印
         # 计算右髋关节的速度和加速度
         if isNpDataValid(rightHipLoc, self.__preRightHipLoc) is False:
-            rightHipLoc = self.__preRightHipLoc + 0.1 * self.__preRightHipSpd
+            rightHipLoc = self.__preRightHipLoc # + 0.1 * self.__preRightHipSpd
             self.__preRightHipAcc = np.array([0.0, 0.0, 0.0])
         else:
             rightHipSpd = 10 * (rightHipLoc - self.__preRightHipLoc)
@@ -252,7 +288,7 @@ class Extractor:
             self.__preRightHipSpd = rightHipSpd
         # 计算右膝关节的速度和加速度
         if isNpDataValid(rightKneeLoc, self.__preRightKneeLoc) is False:
-            rightKneeLoc = self.__preRightKneeLoc + 0.1 * self.__preRightKneeSpd
+            rightKneeLoc = self.__preRightKneeLoc# + 0.1 * self.__preRightKneeSpd
             self.__preRightKneeAcc = np.array([0.0, 0.0, 0.0])
         else:
             rightKneeSpd = 10 * (rightKneeLoc - self.__preRightKneeLoc)
@@ -260,7 +296,7 @@ class Extractor:
             self.__preRightKneeSpd = rightKneeSpd
         # 计算左髋关节的速度和加速度
         if isNpDataValid(leftHipLoc, self.__preLeftHipLoc) is False:
-            leftHipLoc = self.__preLeftHipLoc + 0.1 * self.__preLeftHipSpd
+            leftHipLoc = self.__preLeftHipLoc# + 0.1 * self.__preLeftHipSpd
             self.__preLeftHipAcc = np.array([0.0, 0.0, 0.0])
         else:
             leftHipSpd = 10 * (leftHipLoc - self.__preLeftHipLoc)
@@ -268,7 +304,7 @@ class Extractor:
             self.__preLeftHipSpd = leftHipSpd
         # 计算左膝关节的速度和加速度
         if isNpDataValid(leftKneeLoc, self.__preLeftKneeLoc) is False:
-            leftKneeLoc = self.__preLeftKneeLoc + 0.1 * self.__preLeftKneeSpd
+            leftKneeLoc = self.__preLeftKneeLoc# + 0.1 * self.__preLeftKneeSpd
             self.__preLeftKneeAcc = np.array([0.0, 0.0, 0.0])
         else:
             leftKneeSpd = 10 * (leftKneeLoc - self.__preLeftKneeLoc)
@@ -279,6 +315,7 @@ class Extractor:
         rightKneeSpd = np.array([0.0, 0.0, 0.0])
         leftHipSpd = np.array([0.0, 0.0, 0.0])
         leftKneeSpd = np.array([0.0, 0.0, 0.0])
+        '''
         # 右
         (rightHipLoc[0], rightHipSpd[0]) = self.__rightHipKalX.run(rightHipLoc[0], self.__preRightHipSpd[0], self.__preRightHipAcc[0])
         (rightHipLoc[1], rightHipSpd[1]) = self.__rightHipKalY.run(rightHipLoc[1], self.__preRightHipSpd[1], self.__preRightHipAcc[1])
@@ -293,13 +330,39 @@ class Extractor:
         (leftKneeLoc[0], leftKneeSpd[0]) = self.__leftKneeKalX.run(leftKneeLoc[0], self.__preLeftKneeSpd[0], self.__preLeftKneeAcc[0])
         (leftKneeLoc[1], leftKneeSpd[1]) = self.__leftKneeKalY.run(leftKneeLoc[1], self.__preLeftKneeSpd[1], self.__preLeftKneeAcc[1])
         (leftKneeLoc[2], leftKneeSpd[2]) = self.__leftKneeKalZ.run(leftKneeLoc[2], self.__preLeftKneeSpd[2], self.__preLeftKneeAcc[2])
+        '''
         self.__preRightHipLoc = rightHipLoc
         self.__preRightKneeLoc = rightKneeLoc
         self.__preLeftHipLoc = leftHipLoc
         self.__preLeftKneeLoc = leftKneeLoc
+        
+        theta = robotLoc.theta
+        robotx = robotLoc.x
+        roboty = robotLoc.y
+        hipx2world = rightHipLoc[0]
+        hipy2world = rightHipLoc[1]
+        hipx2robot = cos(theta) * ( hipx2world - robotx ) + sin(theta) * ( hipy2world - roboty )
+        hipy2robot =-sin(theta) * ( hipx2world - robotx ) + cos(theta) * ( hipy2world - roboty )
+        hipx2robot = self.__rightHipButterX.run(hipx2robot)
+        hipy2robot = self.__rightHipButterY.run(hipy2robot)
+        hipx2world = cos(theta) * hipx2robot - sin(theta) * hipy2robot + robotx
+        hipy2world = sin(theta) * hipx2robot + cos(theta) * hipy2robot + roboty
+
+        kneex2world = rightKneeLoc[0]
+        kneey2world = rightKneeLoc[1]
+        kneex2robot = cos(theta) * ( kneex2world - robotx ) + sin(theta) * ( kneey2world - roboty )
+        kneey2robot =-sin(theta) * ( kneex2world - robotx ) + cos(theta) * ( kneey2world - roboty )
+        kneex2robot = self.__rightKneeButterX.run(kneex2robot)
+        kneey2robot = self.__rightKneeButterY.run(kneey2robot)
+        kneex2world = cos(theta) * kneex2robot - sin(theta) * kneey2robot + robotx
+        kneey2world = sin(theta) * kneex2robot + cos(theta) * kneey2robot + roboty
+
+        # print("hip", hipx2world, hipy2world, rightHipLoc[0], rightHipLoc[1] )
+        # print("kne", kneex2world, kneey2world , rightKneeLoc[0], rightKneeLoc[1])
+
         record.extend([
-            rightHipLoc[0]*1000, rightHipLoc[1]*1000, rightHipLoc[2]*1000,
-            rightKneeLoc[0]*1000, rightKneeLoc[1]*1000, rightKneeLoc[2]*1000,
+            hipx2world*1000, hipy2world*1000, rightHipLoc[2]*1000,
+            kneex2world*1000, kneey2world*1000, rightKneeLoc[2]*1000,
             leftHipLoc[0]*1000, leftHipLoc[1]*1000, leftHipLoc[2]*1000,
             leftKneeLoc[0]*1000, leftKneeLoc[1]*1000, leftKneeLoc[2]*1000,
             rightHipSpd[0]*1000, rightHipSpd[1]*1000, rightHipSpd[2]*1000,

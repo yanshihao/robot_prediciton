@@ -157,7 +157,7 @@ model = Seq2Seq(enc, dec, device).to(device)
 
 class Model:
     def __init__(self):
-        INPUT_DIM = 6
+        INPUT_DIM = 5
         OUTPUT_DIM = 2
         ENC_EMB_DIM = 24
         DEC_EMB_DIM = 24
@@ -180,9 +180,9 @@ class Model:
         # 2. 去中心化，以最后一个点为中心
         npLocations[:,0:2] = (npLocations[:,0:2] - centers[np.newaxis, :] - mu[np.newaxis, :])/sig[np.newaxis, :]
         npLocations[:,2:4] = (npLocations[:,2:4] - centers[np.newaxis, :] - mu[np.newaxis, :])/sig[np.newaxis, :]
-        npLocations[:,4] = (npLocations[:,4] - centers[np.newaxis, 0] - mu[np.newaxis, 0])/sig[np.newaxis, 0]
-        npLocations[:,5] =  npLocations[:,5] / 540
-        npLocations = npLocations.reshape(11, 1, 6)
+        # npLocations[:,4] = (npLocations[:,4] - centers[np.newaxis, 0] - mu[np.newaxis, 0])/sig[np.newaxis, 0]
+        npLocations[:,4] =  npLocations[:,4] / 540
+        npLocations = npLocations.reshape(11, 1, 5)
         # 3. 轨迹预测
         tsLocations = torch.tensor(npLocations, dtype=torch.float32).to(device)
         self.model.eval()
